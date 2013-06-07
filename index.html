@@ -2,18 +2,55 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-    <link rel="stylesheet" href="Styles/smoothness/jquery-ui-1.10.3.custom.min.css" />
     <script src="Scripts/jquery-2.0.1.min.js"></script>
-    <script src="Scripts/jquery-ui-1.10.3.custom.min.js"></script>
-    <script src="Scripts/jquery.btechco.tree.js"></script>
+    <script src="Scripts/jquery.btechco.excelexport.js"></script>
 </head>
 <body>
-    
+    <div>
+        <table id="tblExport">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button id="btnExport">Export</button></div>
 </body>
 </html>
 <script>
     $(document).ready(function () {
+        $("#btnExport").click(function () {
 
-
+            $("#tblExport").btechco_excelexport({
+                containerid: "tblExport"
+               , dataset: null
+               , datatype: $treedatatype.Table
+            });
+        });
     });
 </script>
