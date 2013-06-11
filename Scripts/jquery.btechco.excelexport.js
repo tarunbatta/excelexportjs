@@ -41,7 +41,7 @@
         }
 
         function ConvertJsonToTable() {
-            var result = "<table>";
+            var result = "";
 
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
@@ -65,12 +65,11 @@
             });
             result += "</tbody>";
 
-            result += "</table>";
             return result;
         }
 
         function ConvertXmlToTable() {
-            var result = "<table>";
+            var result = "";
 
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
@@ -94,7 +93,6 @@
             });
             result += "</tbody>";
 
-            result += "</table>";
             return result;
         }
 
@@ -120,12 +118,14 @@
             excelFile += "</head>";
             excelFile += "<body>";
             excelFile += "<table>";
-            excelFile += htmltable;
+            excelFile += htmltable.replace(/"/g, '\'');
             excelFile += "</table>";
             excelFile += "</body>";
             excelFile += "</html>";
 
-            window.open('data:application/vnd.ms-excel,' + excelFile);
+            console.log(excelFile);
+
+            //window.open('data:application/vnd.ms-excel,' + excelFile);
         }
     };
 })(jQuery);
