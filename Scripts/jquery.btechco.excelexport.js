@@ -30,7 +30,7 @@
 
         switch ($settings.datatype) {
             case 1:
-                Export($("#" + $settings.containerid).html());
+                Export($("#" + $settings.containerid).parent().html());
                 break;
             case 2:
                 Export(ConvertJsonToTable());
@@ -41,13 +41,19 @@
         }
 
         function ConvertJsonToTable() {
-            var result = "";
+            var result = "<table>";
 
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
-                result += "<th>";
-                result += this.headertext;
-                result += "</th>";
+                if (this.ishidden != true) {
+                    result += "<th";
+                    if (this.width != null) {
+                        result += " style='width: " + this.width + "'";
+                    }
+                    result += ">";
+                    result += this.headertext;
+                    result += "</th>";
+                }
             });
             result += "</tr></thead>";
 
@@ -56,20 +62,28 @@
                 result += "<tr>";
                 $($settings.columns).each(function (k, v) {
                     if (value.hasOwnProperty(this.datafield)) {
-                        result += "<td>";
-                        result += value[this.datafield];
-                        result += "</td>";
+                        if (this.ishidden != true) {
+                            result += "<td";
+                            if (this.width != null) {
+                                result += " style='width: " + this.width + "'";
+                            }
+                            result += ">";
+                            result += value[this.datafield];
+                            result += "</td>";
+                        }
                     }
                 });
                 result += "</tr>";
+                console.log(result);
             });
             result += "</tbody>";
 
+            result += "</table>";
             return result;
         }
 
         function ConvertXmlToTable() {
-            var result = "";
+            var result = "<table>";
 
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
@@ -93,6 +107,7 @@
             });
             result += "</tbody>";
 
+            result += "</table>";
             return result;
         }
 
@@ -117,15 +132,12 @@
             excelFile += "<![endif]-->";
             excelFile += "</head>";
             excelFile += "<body>";
-            excelFile += "<table>";
             excelFile += htmltable.replace(/"/g, '\'');
-            excelFile += "</table>";
             excelFile += "</body>";
             excelFile += "</html>";
 
-            console.log(excelFile);
-
-            //window.open('data:application/vnd.ms-excel,' + excelFile);
+            var base64data = "base64," + $.base64.encode(excelFile);
+            window.open('data:application/vnd.ms-excel;filename=test;' + base64data);
         }
     };
 })(jQuery);

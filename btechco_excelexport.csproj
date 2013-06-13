@@ -57,9 +57,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="examplexml.html" />
+    <Content Include="exampletable.html" />
+    <Content Include="examplejson.html" />
     <Content Include="index.html" />
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\jquery-2.0.1.min.js" />
+    <Content Include="Scripts\jquery.base64.js" />
     <Content Include="Scripts\jquery.btechco.excelexport.js" />
     <Content Include="Scripts\jquery.btechco.excelexport.min.js" />
     <Content Include="Scripts\_references.js" />
