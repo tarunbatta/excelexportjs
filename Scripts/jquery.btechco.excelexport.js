@@ -74,7 +74,6 @@
                     }
                 });
                 result += "</tr>";
-                console.log(result);
             });
             result += "</tbody>";
 
@@ -87,9 +86,15 @@
 
             result += "<thead><tr>";
             $($settings.columns).each(function (key, value) {
-                result += "<th>";
-                result += this.headertext;
-                result += "</th>";
+                if (this.ishidden != true) {
+                    result += "<th";
+                    if (this.width != null) {
+                        result += " style='width: " + this.width + "'";
+                    }
+                    result += ">";
+                    result += this.headertext;
+                    result += "</th>";
+                }
             });
             result += "</tr></thead>";
 
@@ -98,9 +103,15 @@
                 result += "<tr>";
                 $($settings.columns).each(function (k, v) {
                     if ($(value).attr(this.datafield)) {
-                        result += "<td>";
-                        result += $(value).attr(this.datafield);
-                        result += "</td>";
+                        if (this.ishidden != true) {
+                            result += "<td";
+                            if (this.width != null) {
+                                result += " style='width: " + this.width + "'";
+                            }
+                            result += ">";
+                            result += $(value).attr(this.datafield);
+                            result += "</td>";
+                        }
                     }
                 });
                 result += "</tr>";
