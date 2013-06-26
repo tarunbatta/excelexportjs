@@ -10,7 +10,7 @@
 
 (function ($) {
 
-    $treedatatype = {
+    $datatype = {
         Table: 1
         , Json: 2
         , Xml: 3
@@ -19,7 +19,7 @@
 
     var $defaults = {
         containerid: null
-        , datatype: $treedatatype.Table
+        , datatype: $datatype.Table
         , dataset: null
         , columns: null
     };
