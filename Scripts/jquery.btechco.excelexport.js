@@ -14,6 +14,7 @@
         Table: 1
         , Json: 2
         , Xml: 3
+        , JqGrid: 4
     }
 
     var $defaults = {
@@ -37,6 +38,9 @@
                 break;
             case 3:
                 Export(ConvertXmlToTable());
+                break;
+            case 4:
+                Export(ConvertJqGridDataToTable());
                 break;
         }
 
@@ -110,6 +114,49 @@
                             }
                             result += ">";
                             result += $(value).attr(this.datafield);
+                            result += "</td>";
+                        }
+                    }
+                });
+                result += "</tr>";
+            });
+            result += "</tbody>";
+
+            result += "</table>";
+            return result;
+        }
+
+        function ConvertJqGridDataToTable() {
+            var result = "<table>";
+
+            result += "<thead><tr>";
+            $($settings.columns).each(function (key, value) {
+                if (this.ishidden != true) {
+                    result += "<th";
+                    if (this.width != null) {
+                        result += " style='width: " + this.width + "'";
+                    }
+                    result += ">";
+                    result += this.headertext;
+                    result += "</th>";
+                }
+            });
+            result += "</tr></thead>";
+
+            result += "<tbody>";
+            console.log($settings.dataset);
+
+            $($settings.dataset).find("rows > row").each(function (key, value) {
+                result += "<tr>";
+                $($settings.columns).each(function (k, v) {
+                    if ($(value).find(this.datafield)) {
+                        if (this.ishidden != true) {
+                            result += "<td";
+                            if (this.width != null) {
+                                result += " style='width: " + this.width + "'";
+                            }
+                            result += ">";
+                            result += $(value).find(this.datafield).text();
                             result += "</td>";
                         }
                     }

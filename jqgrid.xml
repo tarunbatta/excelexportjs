@@ -1,0 +1,39 @@
+﻿<rows>
+  <page>1</page>
+  <total>1</total>
+  <records>2</records>
+  <row id="0">
+    <cdlId>30</cdlId>
+    <cdlNo>BCTest06</cdlNo>
+    <defectNo>BCTest06-1</defectNo>
+    <flNum>FL06</flNum>
+    <cdlDate>06/03/2013</cdlDate>
+    <dep>LAX</dep>
+    <arr>SEA</arr>
+    <cDefectType>Food Service</cDefectType>
+    <defectDesc>Passenger dislikes color of peanut bag</defectDesc>
+    <actionDesc>
+    </actionDesc>
+    <reportedBy>True</reportedBy>
+    <isEmergency>False</isEmergency>
+    <pos>
+    </pos>
+  </row>
+  <row id="1">
+    <cdlId>61</cdlId>
+    <cdlNo>BCTest10</cdlNo>
+    <defectNo>BCTest10-1</defectNo>
+    <flNum>FLI12</flNum>
+    <cdlDate>06/05/2013</cdlDate>
+    <dep>SEA</dep>
+    <arr>LAX</arr>
+    <cDefectType>Air Conditioning</cDefectType>
+    <defectDesc>1st Row deferred</defectDesc>
+    <actionDesc>
+    </actionDesc>
+    <reportedBy>True</reportedBy>
+    <isEmergency>False</isEmergency>
+    <pos>
+    </pos>
+  </row>
+</rows>
