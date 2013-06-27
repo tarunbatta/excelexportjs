@@ -142,9 +142,7 @@
                 }
             });
             result += "</tr></thead>";
-
             result += "<tbody>";
-            console.log($settings.dataset);
 
             $($settings.dataset).find("rows > row").each(function (key, value) {
                 result += "<tr>";
