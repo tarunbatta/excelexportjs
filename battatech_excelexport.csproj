@@ -70,7 +70,7 @@
     <Content Include="Scripts\_references.js" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="btechco_excelexport.jquery.json" />
+    <Content Include="battatech_excelexport.jquery.json" />
     <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
