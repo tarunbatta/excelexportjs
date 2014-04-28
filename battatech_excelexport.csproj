@@ -64,7 +64,6 @@
     <Content Include="index.html" />
     <Content Include="jqgrid.xml" />
     <Content Include="LICENSE.txt" />
-    <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery.battatech.excelexport.js" />
     <Content Include="Scripts\jquery.battatech.excelexport.min.js" />
     <Content Include="Scripts\_references.js" />

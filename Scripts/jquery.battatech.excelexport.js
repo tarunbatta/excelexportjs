@@ -3,7 +3,7 @@
  * http://www.battatech.com/
  *
  * Copyright (c) 2013 Batta Tech Private Limited
- * Licensed under https://github.com/battatech/btechco_excelexport/blob/master/LICENSE.txt.
+ * Licensed under https://github.com/battatech/battatech_excelexport/blob/master/LICENSE.txt
  */
 
 (function ($) {
