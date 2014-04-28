@@ -1,5 +1,5 @@
 {
-    "name": "btechco_excelexport",
+    "name": "battatech_excelexport",
     "title": "Export to Excel",
     "description": "Exports table, grid and date to excel sheet format.",
     "keywords": [
@@ -14,7 +14,7 @@
     },
     "licenses": [
         {
-            "type": "BTechCo",
+            "type": "BattaTech",
             "url": "https://github.com/battatech/btechco_excelexport/blob/master/LICENSE.txt"
         }
     ],

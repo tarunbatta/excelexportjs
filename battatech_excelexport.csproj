@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>btechco_excelexport</RootNamespace>
-    <AssemblyName>btechco_excelexport</AssemblyName>
+    <RootNamespace>BattaTech.ExcelExport</RootNamespace>
+    <AssemblyName>BattaTech.ExcelExport</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
@@ -64,9 +64,9 @@
     <Content Include="index.html" />
     <Content Include="jqgrid.xml" />
     <Content Include="LICENSE.txt" />
-    <Content Include="Scripts\jquery-2.0.1.min.js" />
-    <Content Include="Scripts\jquery.btechco.excelexport.js" />
-    <Content Include="Scripts\jquery.btechco.excelexport.min.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <Content Include="Scripts\jquery.battatech.excelexport.js" />
+    <Content Include="Scripts\jquery.battatech.excelexport.min.js" />
     <Content Include="Scripts\_references.js" />
   </ItemGroup>
   <ItemGroup>
@@ -75,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="Styles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />

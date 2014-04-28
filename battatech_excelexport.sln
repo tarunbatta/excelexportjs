@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "btechco_excelexport", "btechco_excelexport.csproj", "{40728B6C-6382-4E2F-BF13-74F60BD430E4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "battatech_excelexport", "battatech_excelexport.csproj", "{40728B6C-6382-4E2F-BF13-74F60BD430E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
