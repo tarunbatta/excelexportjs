@@ -10,18 +10,18 @@
     "version": "1.0.0",
     "author": {
         "name": "Tarun Batta",
-        "url": "http://tarunbatta.blogspot.com/"
+        "url": "http://battatech.com/"
     },
     "licenses": [
         {
             "type": "BTechCo",
-            "url": "https://github.com/btechco/btechco_excelexport/blob/master/LICENSE.txt"
+            "url": "https://github.com/battatech/btechco_excelexport/blob/master/LICENSE.txt"
         }
     ],
-    "bugs": "https://github.com/btechco/btechco_excelexport/issues",
-    "homepage": "https://github.com/btechco/btechco_excelexport/wiki",
-    "docs": "https://github.com/btechco/btechco_excelexport/wiki/Documentation",
-    "download": "https://github.com/btechco/btechco_excelexport",
+    "bugs": "https://github.com/battatech/btechco_excelexport/issues",
+    "homepage": "http://battatech.com/blog/how-to-export-to-excel-sheet-on-client-side.aspx",
+    "docs": "http://battatech.com/blog/how-to-export-to-excel-sheet-on-client-side.aspx",
+    "download": "https://github.com/battatech/btechco_excelexport",
     "dependencies": {
         "jquery": ">=1.8"
     }

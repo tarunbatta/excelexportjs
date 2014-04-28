@@ -1,11 +1,9 @@
 ﻿/*
- * jQuery Excel Export Plugin Library
- * http://tarunbatta.blogspot.com/
+ * jQuery Client Side Excel Export Plugin Library
+ * http://www.battatech.com/
  *
  * Copyright (c) 2013 Tarun Batta
- * Licensed under BTechCo licenses.
- * https://github.com/btechco/btechco_excelexport/wiki
- *
+ * Licensed under https://github.com/battatech/btechco_excelexport/blob/master/LICENSE.txt.
  */
 
 (function ($) {
@@ -29,22 +27,67 @@
     $.fn.btechco_excelexport = function (options) {
         $settings = $.extend({}, $defaults, options);
 
+        var gridData = [];
+
+        BuildDataStructure();
+
         switch ($settings.datatype) {
             case 1:
-                Export($("#" + $settings.containerid).parent().html());
+                Export(ConvertFromTable());
                 break;
             case 2:
-                Export(ConvertJsonToTable());
+                Export(ConvertDataStructureToTable());
                 break;
             case 3:
-                Export(ConvertXmlToTable());
+                Export(ConvertDataStructureToTable());
                 break;
             case 4:
-                Export(ConvertJqGridDataToTable());
+                Export(ConvertDataStructureToTable());
                 break;
         }
 
-        function ConvertJsonToTable() {
+        function BuildDataStructure() {
+            switch ($settings.datatype) {
+                case 1:
+                    break;
+                case 2:
+                    gridData = $settings.dataset;
+                    break;
+                case 3:
+                    $($settings.dataset).find("row").each(function (key, value) {
+                        var item = {};
+
+                        if (this.attributes != null && this.attributes.length > 0) {
+                            $(this.attributes).each(function () {
+                                item[this.name] = this.value;
+                            });
+
+                            gridData.push(item);
+                        }
+                    });
+                    break;
+                case 4:
+                    $($settings.dataset).find("rows > row").each(function (key, value) {
+                        var item = {};
+
+                        if (this.children != null && this.children.length > 0) {
+                            $(this.children).each(function () {
+                                item[this.tagName] = $(this).text();
+                            });
+
+                            gridData.push(item);
+                        }
+                    });
+                    break;
+            }
+        }
+
+        function ConvertFromTable() {
+            var result = $("#" + $settings.containerid).parent().html();
+            return result;
+        }
+
+        function ConvertDataStructureToTable() {
             var result = "<table>";
 
             result += "<thead><tr>";
@@ -62,7 +105,7 @@
             result += "</tr></thead>";
 
             result += "<tbody>";
-            $($settings.dataset).each(function (key, value) {
+            $(gridData).each(function (key, value) {
                 result += "<tr>";
                 $($settings.columns).each(function (k, v) {
                     if (value.hasOwnProperty(this.datafield)) {
@@ -73,88 +116,6 @@
                             }
                             result += ">";
                             result += value[this.datafield];
-                            result += "</td>";
-                        }
-                    }
-                });
-                result += "</tr>";
-            });
-            result += "</tbody>";
-
-            result += "</table>";
-            return result;
-        }
-
-        function ConvertXmlToTable() {
-            var result = "<table>";
-
-            result += "<thead><tr>";
-            $($settings.columns).each(function (key, value) {
-                if (this.ishidden != true) {
-                    result += "<th";
-                    if (this.width != null) {
-                        result += " style='width: " + this.width + "'";
-                    }
-                    result += ">";
-                    result += this.headertext;
-                    result += "</th>";
-                }
-            });
-            result += "</tr></thead>";
-
-            result += "<tbody>";
-            $($settings.dataset).find("row").each(function (key, value) {
-                result += "<tr>";
-                $($settings.columns).each(function (k, v) {
-                    if ($(value).attr(this.datafield)) {
-                        if (this.ishidden != true) {
-                            result += "<td";
-                            if (this.width != null) {
-                                result += " style='width: " + this.width + "'";
-                            }
-                            result += ">";
-                            result += $(value).attr(this.datafield);
-                            result += "</td>";
-                        }
-                    }
-                });
-                result += "</tr>";
-            });
-            result += "</tbody>";
-
-            result += "</table>";
-            return result;
-        }
-
-        function ConvertJqGridDataToTable() {
-            var result = "<table>";
-
-            result += "<thead><tr>";
-            $($settings.columns).each(function (key, value) {
-                if (this.ishidden != true) {
-                    result += "<th";
-                    if (this.width != null) {
-                        result += " style='width: " + this.width + "'";
-                    }
-                    result += ">";
-                    result += this.headertext;
-                    result += "</th>";
-                }
-            });
-            result += "</tr></thead>";
-            result += "<tbody>";
-
-            $($settings.dataset).find("rows > row").each(function (key, value) {
-                result += "<tr>";
-                $($settings.columns).each(function (k, v) {
-                    if ($(value).find(this.datafield)) {
-                        if (this.ishidden != true) {
-                            result += "<td";
-                            if (this.width != null) {
-                                result += " style='width: " + this.width + "'";
-                            }
-                            result += ">";
-                            result += $(value).find(this.datafield).text();
                             result += "</td>";
                         }
                     }
@@ -192,8 +153,17 @@
             excelFile += "</body>";
             excelFile += "</html>";
 
-            var base64data = "base64," + $.base64.encode(excelFile);
-            window.open('data:application/vnd.ms-excel;filename=test;' + base64data);
+            var uri = "data:application/vnd.ms-excel;base64,";
+            var ctx = { worksheet: name || 'Worksheet', table: htmltable };
+            window.open(uri + base64(format(excelFile, ctx)));
+        }
+
+        function base64(s) {
+            return window.btoa(unescape(encodeURIComponent(s)));
+        }
+
+        function format(s, c) {
+            return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; });
         }
     };
 })(jQuery);

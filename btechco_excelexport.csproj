@@ -65,7 +65,6 @@
     <Content Include="jqgrid.xml" />
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\jquery-2.0.1.min.js" />
-    <Content Include="Scripts\jquery.base64.js" />
     <Content Include="Scripts\jquery.btechco.excelexport.js" />
     <Content Include="Scripts\jquery.btechco.excelexport.min.js" />
     <Content Include="Scripts\_references.js" />
@@ -77,6 +76,15 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Styles\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

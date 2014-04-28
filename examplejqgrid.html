@@ -4,7 +4,6 @@
     <title></title>
     <script src="Scripts/jquery-2.0.1.min.js"></script>
     <script src="Scripts/jquery.btechco.excelexport.js"></script>
-    <script src="Scripts/jquery.base64.js"></script>
 </head>
 <body>
     <div id="dvxml">
@@ -36,10 +35,11 @@
                 , datatype: $datatype.JqGrid
                 , dataset: dataobj
                 , columns: [
-                    { headertext: "CDL Id", datafield: "cdlId", ishidden: false, width: "50px" }
-                    , { headertext: "CDL No", datafield: "cdlNo", ishidden: false, width: "50px" }
-                    , { headertext: "Defect No", datafield: "defectNo", ishidden: true, width: "50px" }
-                    , { headertext: "Defect Desc", datafield: "defectDesc", ishidden: false, width: "50px" }
+                    { headertext: "S.No.", datatype: "number", datafield: "id", ishidden: false }
+                    , { headertext: "First Name", datatype: "string", datafield: "fname", width: "100px" }
+                    , { headertext: "Last Name", datatype: "string", datafield: "lname", ishidden: false, width: "100px" }
+                    , { headertext: "Username", datatype: "string", datafield: "uname", ishidden: true }
+                    , { headertext: "Date", datatype: "date", format: "xxxx,xx", datafield: "dt", ishidden: false, width: "150px" }
                 ]
             });
         });
