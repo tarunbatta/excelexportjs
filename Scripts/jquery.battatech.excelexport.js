@@ -83,7 +83,7 @@
         }
 
         function ConvertFromTable() {
-            var result = $("#" + $settings.containerid).parent().html();
+            var result = $('<div>').append($('#' + $settings.containerid ).clone()).html();
             return result;
         }
 
