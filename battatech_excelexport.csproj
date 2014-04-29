@@ -57,6 +57,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="exampleTableReturnUri.html" />
     <Content Include="examplejqgrid.html" />
     <Content Include="examplexml.html" />
     <Content Include="exampletable.html" />

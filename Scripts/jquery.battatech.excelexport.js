@@ -20,6 +20,7 @@
         , datatype: $datatype.Table
         , dataset: null
         , columns: null
+        , returnUri: false
     };
 
     var $settings = $defaults;
@@ -28,22 +29,34 @@
         $settings = $.extend({}, $defaults, options);
 
         var gridData = [];
+        var excelData;
 
-        BuildDataStructure();
+        return Initialize();
 
-        switch ($settings.datatype) {
-            case 1:
-                Export(ConvertFromTable());
-                break;
-            case 2:
-                Export(ConvertDataStructureToTable());
-                break;
-            case 3:
-                Export(ConvertDataStructureToTable());
-                break;
-            case 4:
-                Export(ConvertDataStructureToTable());
-                break;
+        function Initialize() {
+            BuildDataStructure();
+            
+            switch ($settings.datatype) {
+                case 1:
+                    excelData = Export(ConvertFromTable());
+                    break;
+                case 2:
+                    excelData = Export(ConvertDataStructureToTable());
+                    break;
+                case 3:
+                    excelData = Export(ConvertDataStructureToTable());
+                    break;
+                case 4:
+                    excelData = Export(ConvertDataStructureToTable());
+                    break;
+            }
+
+            if ($settings.returnUri) {
+                return excelData;
+            }
+            else {
+                window.open(excelData);
+            }
         }
 
         function BuildDataStructure() {
@@ -155,7 +168,8 @@
 
             var uri = "data:application/vnd.ms-excel;base64,";
             var ctx = { worksheet: name || 'Worksheet', table: htmltable };
-            window.open(uri + base64(format(excelFile, ctx)));
+
+            return (uri + base64(format(excelFile, ctx)));           
         }
 
         function base64(s) {

@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+    <script src="Scripts/jquery.battatech.excelexport.js"></script>
+</head>
+<body>
+    <div id="dv">
+        <p>Table Example with ReturnUri feature:</p>
+        <table id="tblExport" style="border: 1px solid black;">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Username</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style='background-color: red;'>1</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>@fat</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div>
+        <a id="btnExport" href="#" download="">Export</a>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnExport").on('click', function () {
+            var uri = $("#tblExport").btechco_excelexport({
+                containerid: "tblExport"
+                , datatype: $datatype.Table
+                , returnUri: true
+            });
+
+            $(this).attr('download', 'ExportToExcel.xls').attr('href', uri).attr('target', '_blank');
+        });
+    });
+</script>
