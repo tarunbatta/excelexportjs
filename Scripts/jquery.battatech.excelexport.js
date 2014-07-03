@@ -167,7 +167,7 @@
             excelFile += "</html>";
 
             var uri = "data:application/vnd.ms-excel;base64,";
-            var ctx = { worksheet: name || 'Worksheet', table: htmltable };
+            var ctx = { worksheet: $settings.worksheetName || 'Worksheet', table: htmltable };
 
             return (uri + base64(format(excelFile, ctx)));           
         }
