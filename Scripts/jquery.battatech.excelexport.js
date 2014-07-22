@@ -21,6 +21,7 @@
         , dataset: null
         , columns: null
         , returnUri: false
+        , worksheetName: "My Worksheet"
     };
 
     var $settings = $defaults;
@@ -35,7 +36,7 @@
 
         function Initialize() {
             BuildDataStructure();
-            
+
             switch ($settings.datatype) {
                 case 1:
                     excelData = Export(ConvertFromTable());
@@ -96,7 +97,7 @@
         }
 
         function ConvertFromTable() {
-            var result = $('<div>').append($('#' + $settings.containerid ).clone()).html();
+            var result = $('<div>').append($('#' + $settings.containerid).clone()).html();
             return result;
         }
 
@@ -167,9 +168,9 @@
             excelFile += "</html>";
 
             var uri = "data:application/vnd.ms-excel;base64,";
-            var ctx = { worksheet: name || 'Worksheet', table: htmltable };
+            var ctx = { worksheet: $settings.worksheetName, table: htmltable };
 
-            return (uri + base64(format(excelFile, ctx)));           
+            return (uri + base64(format(excelFile, ctx)));
         }
 
         function base64(s) {
