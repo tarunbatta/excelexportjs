@@ -146,7 +146,7 @@
         function Export(htmltable) {
             var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";
             excelFile += "<head>";
-			excelFile += '<meta http-equiv="Content-type" content="text/html;charset=' + $defaults.encoding + '" />';
+            excelFile += '<meta http-equiv="Content-type" content="text/html;charset=' + $defaults.encoding + '" />';
             excelFile += "<!--[if gte mso 9]>";
             excelFile += "<xml>";
             excelFile += "<x:ExcelWorkbook>";
