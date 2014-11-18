@@ -7,17 +7,9 @@
  */
 
 (function ($) {
-
-    $datatype = {
-        Table: 1
-        , Json: 2
-        , Xml: 3
-        , JqGrid: 4
-    }
-
     var $defaults = {
         containerid: null
-        , datatype: $datatype.Table
+        , datatype: 'table'
         , dataset: null
         , columns: null
         , returnUri: false
@@ -27,7 +19,7 @@
 
     var $settings = $defaults;
 
-    $.fn.btechco_excelexport = function (options) {
+    $.fn.battatech_excelexport = function (options) {
         $settings = $.extend({}, $defaults, options);
 
         var gridData = [];
@@ -36,19 +28,21 @@
         return Initialize();
 
         function Initialize() {
-            BuildDataStructure();
+            var type = $settings.datatype.toLowerCase();
 
-            switch ($settings.datatype) {
-                case 1:
+            BuildDataStructure(type);
+
+            switch (type) {
+                case 'table':
                     excelData = Export(ConvertFromTable());
                     break;
-                case 2:
+                case 'json':
                     excelData = Export(ConvertDataStructureToTable());
                     break;
-                case 3:
+                case 'xml':
                     excelData = Export(ConvertDataStructureToTable());
                     break;
-                case 4:
+                case 'jqgrid':
                     excelData = Export(ConvertDataStructureToTable());
                     break;
             }
@@ -61,14 +55,14 @@
             }
         }
 
-        function BuildDataStructure() {
-            switch ($settings.datatype) {
-                case 1:
+        function BuildDataStructure(type) {
+            switch (type) {
+                case 'table':
                     break;
-                case 2:
+                case 'json':
                     gridData = $settings.dataset;
                     break;
-                case 3:
+                case 'xml':
                     $($settings.dataset).find("row").each(function (key, value) {
                         var item = {};
 
@@ -81,7 +75,7 @@
                         }
                     });
                     break;
-                case 4:
+                case 'jqgrid':
                     $($settings.dataset).find("rows > row").each(function (key, value) {
                         var item = {};
 

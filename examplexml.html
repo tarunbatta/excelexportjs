@@ -18,9 +18,9 @@
         $("#btnExport").click(function () {
             var dataobj = "<root><row id='1' fname='Mark' lname='Otto' uname='@mdo'></row><row id='2' fname='Jacob' lname='Thornton' uname='@fat'></row><row id='3' fname='Larry' lname='the Bird' uname='@twitter'></row></root>";
 
-            $("#dvxml").btechco_excelexport({
+            $("#dvxml").battatech_excelexport({
                 containerid: "dvxml"
-                , datatype: $datatype.Xml
+                , datatype: 'xml'
                 , dataset: dataobj
                 , columns: [
                     { headertext: "S.No.", datatype: "string", datafield: "id", ishidden: false, width: "50px" }
