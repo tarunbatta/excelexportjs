@@ -23,6 +23,6 @@
     "docs": "http://battatech.com/blog/how-to-export-to-excel-sheet-on-client-side.aspx",
     "download": "https://github.com/battatech/battatech_excelexport",
     "dependencies": {
-        "jquery": ">=1.8"
+        "jquery": ">=2.1.1"
     }
 }
