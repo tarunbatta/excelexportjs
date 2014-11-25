@@ -68,7 +68,6 @@
     <Content Include="LICENSE.txt" />
     <Content Include="Scripts\jquery.battatech.excelexport.js" />
     <Content Include="Scripts\jquery.battatech.excelexport.min.js" />
-    <Content Include="Scripts\_references.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="battatech_excelexport.jquery.json" />

@@ -1,0 +1,25 @@
+{
+  "name": "battatech_excelexport",
+  "version": "2.0.0",
+  "homepage": "https://github.com/battatech/battatech_excelexport",
+  "authors": [
+    "Tarun Batta <info@battatech.com>"
+  ],
+  "description": "Client side javascript plugin which helps to export table, data (json or xml) to excel sheet.",
+  "main": "jquery.battatech.excelexport.js",
+  "keywords": [
+    "excel",
+    "export"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1"
+  }
+}
