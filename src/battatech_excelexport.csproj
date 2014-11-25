@@ -65,19 +65,18 @@
     <Content Include="examplejson.html" />
     <Content Include="index.html" />
     <Content Include="jqgrid.xml" />
-    <Content Include="LICENSE.txt" />
     <Content Include="Scripts\jquery.battatech.excelexport.js" />
     <Content Include="Scripts\jquery.battatech.excelexport.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="battatech_excelexport.jquery.json" />
-    <Content Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />
+    <Content Include="bower.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
