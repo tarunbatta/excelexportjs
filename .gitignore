@@ -2,6 +2,7 @@
 ## Custom
 #################
 bower_components/
+node_modules/
 
 #################
 ## Eclipse
