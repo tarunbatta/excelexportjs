@@ -19,8 +19,8 @@
         }
     ],
     "bugs": "https://github.com/battatech/battatech_excelexport/issues",
-    "homepage": "http://battatech.com/blog/how-to-export-to-excel-sheet-on-client-side",
-    "docs": "http://battatech.com/blog/how-to-export-to-excel-sheet-on-client-side",
+    "homepage": "http://blog.battatech.com/how-to-export-to-excel-sheet-on-client-side/",
+    "docs": "http://blog.battatech.com/how-to-export-to-excel-sheet-on-client-side/",
     "download": "https://github.com/battatech/battatech_excelexport",
     "dependencies": {
         "jquery": ">=2.1.1"
