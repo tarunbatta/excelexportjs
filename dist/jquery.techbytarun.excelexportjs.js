@@ -19,7 +19,7 @@
 
     var $settings = $defaults;
 
-    $.fn.battatech_excelexport = function (options) {
+    $.fn.excelexportjs = function (options) {
         $settings = $.extend({}, $defaults, options);
 
         var gridData = [];

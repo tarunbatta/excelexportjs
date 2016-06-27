@@ -3,7 +3,7 @@
 <head>
     <title></title>
     <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
-    <script type="text/javascript" src="Scripts/jquery.battatech.excelexport.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.techbytarun.excelexportjs.js"></script>
 </head>
 <body>
     <div id="dv">
@@ -48,7 +48,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#btnExport").on('click', function () {
-            var uri = $("#tblExport").battatech_excelexport({
+            var uri = $("#tblExport").excelexportjs({
                 containerid: "tblExport"
                 , datatype: 'table'
                 , returnUri: true
