@@ -1,0 +1,28 @@
+{
+    "name": "excelExportJs",
+    "title": "Export to Excel Using JavaScript  ",
+    "description": "Exports table, grid and date to excel sheet format.",
+    "keywords": [
+        "jquery"
+		, "excel"
+		, "export"
+    ],
+    "version": "3.0.0",
+    "author": {
+        "name": "Tarun Batta",
+        "url": "http://techbytarun.com/"
+    },
+    "licenses": [
+        {
+            "type": "BattaTech",
+            "url": "https://github.com/tarunbatta/ExcelExportJs/blob/master/LICENSE.txt"
+        }
+    ],
+    "bugs": "https://github.com/tarunbatta/ExcelExportJs/issues",
+    "homepage": "http://techbytarun.com/export-to-excel-sheet-using-client-side-javascript/",
+    "docs": "http://techbytarun.com/export-to-excel-sheet-using-client-side-javascript/",
+    "download": "https://github.com/tarunbatta/ExcelExportJs",
+    "dependencies": {
+        "jquery": ">=2.1.1"
+    }
+}

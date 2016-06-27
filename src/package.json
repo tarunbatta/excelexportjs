@@ -1,10 +1,10 @@
 {
-  "name": "battatech_excelexport",
-  "version": "2.1.2",
+  "name": "excelexportjs",
+  "version": "3.0.0",
   "devDependencies": 
   {
-	"grunt": "~0.4.5",
+	  "grunt": "~0.4.5",
     "grunt-contrib-uglify": "~0.6.0",
-	"grunt-contrib-copy": "~0.7.0"
+	  "grunt-contrib-copy": "~0.7.0"
   }
 }

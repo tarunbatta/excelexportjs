@@ -8,22 +8,22 @@
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
             },
             build: {
-                src: 'Scripts/jquery.battatech.excelexport.js',
-                dest: 'Scripts/jquery.battatech.excelexport.min.js'
+                src: 'Scripts/jquery.techbytarun.excelexportjs.js',
+                dest: 'Scripts/jquery.techbytarun.excelexportjs.min.js'
             },
             dist: {
-                src: 'Scripts/jquery.battatech.excelexport.js',
-                dest: '../dist/jquery.battatech.excelexport.min.js'
+                src: 'Scripts/jquery.techbytarun.excelexportjs.js',
+                dest: '../dist/jquery.techbytarun.excelexportjs.min.js'
             }
         }
         , copy: {
             main: {
-                src: 'Scripts/jquery.battatech.excelexport.js',
-                dest: '../dist/jquery.battatech.excelexport.js'
+                src: 'Scripts/jquery.techbytarun.excelexportjs.js',
+                dest: '../dist/jquery.techbytarun.excelexportjs.js'
             }
         }
         , watch: {
-            files: 'Scripts/jquery.battatech.excelexport.js'
+            files: 'Scripts/jquery.techbytarun.excelexportjs.js'
             , tasks: ['uglify']
         }
     });

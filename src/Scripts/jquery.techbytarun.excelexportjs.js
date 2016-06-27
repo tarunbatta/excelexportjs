@@ -1,9 +1,9 @@
 ﻿/*
  * jQuery Client Side Excel Export Plugin Library
- * http://www.battatech.com/
+ * http://techbytarun.com/
  *
  * Copyright (c) 2013 Batta Tech Private Limited
- * Licensed under https://github.com/battatech/battatech_excelexport/blob/master/LICENSE.txt
+ * https://github.com/tarunbatta/ExcelExportJs/blob/master/LICENSE.txt
  */
 
 (function ($) {

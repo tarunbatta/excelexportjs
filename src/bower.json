@@ -1,12 +1,12 @@
 {
-  "name": "battatech_excelexport",
-  "version": "2.1.2",
-  "homepage": "http://blog.battatech.com/how-to-export-to-excel-sheet-on-client-side/",
+  "name": "excelExportJs",
+  "version": "3.0.0",
+  "homepage": "http://techbytarun.com/export-to-excel-sheet-using-client-side-javascript/",
   "authors": [
-    "Tarun Batta <info@battatech.com>"
+    "Tarun Batta <admin@techbytarun.com>"
   ],
   "description": "Client side javascript plugin which helps to export table, data (json or xml) to excel sheet.",
-  "main": "jquery.battatech.excelexport.js",
+  "main": "jquery.techbytarun.excelexportjs.js",
   "keywords": [
     "excel",
     "export"
