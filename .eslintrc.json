@@ -1,0 +1,44 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": false,
+        "es6": true,
+        "node": true
+    },
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-alert": "warn",
+        "no-console": "error",
+        "no-dupe-args": "error",
+        "no-eq-null": "off",
+        "no-fallthrough": "error",
+        "no-floating-decimal": "off",
+        "no-global-assign": "error",
+        "no-multi-str": "off",
+        "no-redeclare": "error",
+        "no-sequences": "off",
+        "no-unused-vars": "off",
+        "no-useless-escape": "off",
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "warn",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ]
+    },
+    "globals": {
+        "$": true
+    }
+}

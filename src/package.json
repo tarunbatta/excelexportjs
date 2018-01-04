@@ -1,9 +1,0 @@
-{
-  "name": "excelexportjs",
-  "version": "3.0.1",
-  "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-copy": "~0.7.0",
-    "grunt-contrib-uglify": "~0.6.0"
-  }
-}

@@ -1,0 +1,36 @@
+{
+    "name": "excelexportjs",
+    "version": "4.0.0",
+    "private": false,
+    "description": "Client Side Excel Export using JavaScript",
+    "main": "dist/index.js",
+    "types": "dist/index.d.js",
+    "scripts": {
+        "prepare": "npm run build",
+        "build": "tsc",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/tarunbatta/ExcelExportJs.git"
+    },
+    "keywords": [
+        "clientside",
+        "excel",
+        "export"
+    ],
+    "author": "Tarun Batta",
+    "license": "ISC",
+    "engines": {
+        "node": ">=8.8.1",
+        "npm": ">=5.5.1"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "grunt": "^1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-uglify": "^3.3.0",
+        "live-server": "^1.2.0",
+        "typescript": "^2.6.2"
+    }
+}
