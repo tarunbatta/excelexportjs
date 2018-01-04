@@ -1,5 +1,9 @@
 # Client Side Excel Export using JavaScript
 
+## Installation
+
+* npm i @tarunbatta/excelexportjs
+
 ## Setup Dev Instance
 
 * npm install -g grunt-cli
