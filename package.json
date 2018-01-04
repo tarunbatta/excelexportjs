@@ -1,7 +1,6 @@
 {
     "name": "excelexportjs",
     "version": "4.0.0",
-    "private": false,
     "description": "Client Side Excel Export using JavaScript",
     "main": "dist/index.js",
     "types": "dist/index.d.js",
@@ -12,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/tarunbatta/ExcelExportJs.git"
+        "url": "https://github.com/tarunbatta/excelexportjs.git"
     },
     "keywords": [
         "clientside",
