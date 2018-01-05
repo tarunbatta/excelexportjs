@@ -8,9 +8,10 @@ var excelExportJs;
         eeCellTypes[eeCellTypes["Boolean"] = 0] = "Boolean";
         eeCellTypes[eeCellTypes["DateTime"] = 1] = "DateTime";
         eeCellTypes[eeCellTypes["Float"] = 2] = "Float";
-        eeCellTypes[eeCellTypes["Number"] = 3] = "Number";
-        eeCellTypes[eeCellTypes["Percent"] = 4] = "Percent";
-        eeCellTypes[eeCellTypes["String"] = 5] = "String";
+        eeCellTypes[eeCellTypes["Html"] = 3] = "Html";
+        eeCellTypes[eeCellTypes["Number"] = 4] = "Number";
+        eeCellTypes[eeCellTypes["Percent"] = 5] = "Percent";
+        eeCellTypes[eeCellTypes["String"] = 6] = "String";
     })(eeCellTypes = excelExportJs.eeCellTypes || (excelExportJs.eeCellTypes = {}));
     var eeHorizontalCellAlignment;
     (function (eeHorizontalCellAlignment) {
@@ -153,6 +154,10 @@ var excelExportJs;
                         this.cellType = 'Number';
                         this.format = 'Fixed';
                         break;
+                    case eeCellTypes.Html:
+                        this.cellType = 'String';
+                        this.format = '@';
+                        break;
                     case eeCellTypes.Number:
                         this.cellType = 'Number';
                         this.format = '0';
@@ -161,6 +166,9 @@ var excelExportJs;
                         this.cellType = 'Number';
                         this.format = 'Percent';
                         break;
+                    default:
+                        this.cellType = 'String';
+                        this.format = '@';
                 }
             }
         }
@@ -243,6 +251,9 @@ var excelExportJs;
             return lines.map(function (line) {
                 return line.replace(/^\s+/gm, '');
             }).join(' ').trim();
+        };
+        eeHelper.htmlEncode = function (html) {
+            return String(html).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         };
         return eeHelper;
     }());
@@ -420,6 +431,9 @@ var excelExportJs;
                                     case eeCellTypes.DateTime:
                                         cellData = new Date(cellData).toISOString();
                                         break;
+                                    case eeCellTypes.Html:
+                                        cellData = eeHelper.htmlEncode(cellData);
+                                        break;
                                 }
                                 rows += "<Cell ss:StyleID=\"" + styleId + "\">\n                                            <Data ss:Type=\"" + item.columns[ikey].type.cellType + "\">" + cellData + "</Data>\n                                        </Cell>";
                             });
@@ -447,12 +461,16 @@ var excelExportJs;
         excelExport.prototype._GetWorksheetOptions = function () {
             return "<WorksheetOptions xmlns=\"urn:schemas-microsoft-com:office:excel\">\n                        <PageSetup>\n                            <Header x:Margin=\"0.3\"/>\n                            <Footer x:Margin=\"0.3\"/>\n                            <PageMargins x:Bottom=\"0.75\" x:Left=\"0.7\" x:Right=\"0.7\" x:Top=\"0.75\"/>\n                        </PageSetup>\n                        <Unsynced/>\n                        <Print>\n                            <ValidPrinterInfo/>\n                            <HorizontalResolution>600</HorizontalResolution>\n                            <VerticalResolution>600</VerticalResolution>\n                        </Print>\n                        <Selected/>\n                        <Panes>\n                            <Pane>\n                                <Number>3</Number>\n                                <ActiveRow>1</ActiveRow>\n                                <ActiveCol>1</ActiveCol>\n                            </Pane>\n                        </Panes>\n                        <ProtectObjects>False</ProtectObjects>\n                        <ProtectScenarios>False</ProtectScenarios>\n                    </WorksheetOptions>";
         };
-        excelExport.prototype.CreateExcel = function () {
+        excelExport.prototype.CreateExcel = function (isCompressed, returnUrl) {
             var result = '';
             result = "<?xml version=\"1.0\"?>\n                    <?mso-application progid=\"Excel.Sheet\"?>\n                    <Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"\n                        xmlns:o=\"urn:schemas-microsoft-com:office:office\"\n                        xmlns:x=\"urn:schemas-microsoft-com:office:excel\"\n                        xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\"\n                        xmlns:html=\"http://www.w3.org/TR/REC-html40\">\n                        " + this._GetDocumentProperties() + "\n                        " + this._GetOfficeDocumentSettings() + "\n                        " + this._GetExcelWorkbook() + "\n                        " + this._GetStyles() + "\n                        " + this._GetWorkSheets() + "\n                    </Workbook>";
-            result = eeHelper.RemoveSpaces(result);
-            var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=' + this._encoding });
-            result = window.URL.createObjectURL(blob);
+            if (isCompressed) {
+                result = eeHelper.RemoveSpaces(result);
+            }
+            if (returnUrl) {
+                var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=' + this._encoding });
+                result = window.URL.createObjectURL(blob);
+            }
             return result;
         };
         return excelExport;

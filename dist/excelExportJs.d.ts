@@ -3,9 +3,10 @@ export declare namespace excelExportJs {
         Boolean = 0,
         DateTime = 1,
         Float = 2,
-        Number = 3,
-        Percent = 4,
-        String = 5,
+        Html = 3,
+        Number = 4,
+        Percent = 5,
+        String = 6,
     }
     enum eeHorizontalCellAlignment {
         Center = "Center",
@@ -78,6 +79,7 @@ export declare namespace excelExportJs {
     }
     class eeHelper {
         static RemoveSpaces(html: string): string;
+        static htmlEncode(html: string): string;
     }
     class excelExport {
         private _dataType;
@@ -102,6 +104,6 @@ export declare namespace excelExportJs {
         private _GetStyles();
         private _GetWorkSheets();
         private _GetWorksheetOptions();
-        CreateExcel(): string;
+        CreateExcel(isCompressed?: boolean, returnUrl?: boolean): string;
     }
 }

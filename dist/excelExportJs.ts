@@ -5,6 +5,7 @@ export namespace excelExportJs {
         Boolean,
         DateTime,
         Float,
+        Html,
         Number,
         Percent,
         String
@@ -184,6 +185,10 @@ export namespace excelExportJs {
                         this.cellType = 'Number';
                         this.format = 'Fixed';
                         break;
+                    case eeCellTypes.Html:
+                        this.cellType = 'String';
+                        this.format = '@';
+                        break;
                     case eeCellTypes.Number:
                         this.cellType = 'Number';
                         this.format = '0';
@@ -192,6 +197,9 @@ export namespace excelExportJs {
                         this.cellType = 'Number';
                         this.format = 'Percent';
                         break;
+                    default:
+                        this.cellType = 'String';
+                        this.format = '@';
                 }
             }
         }
@@ -297,6 +305,10 @@ export namespace excelExportJs {
             return lines.map((line) => {
                 return line.replace(/^\s+/gm, '');
             }).join(' ').trim();
+        }
+
+        static htmlEncode(html: string) {
+            return String(html).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
         }
     }
 
@@ -571,6 +583,9 @@ export namespace excelExportJs {
                                     case eeCellTypes.DateTime:
                                         cellData = new Date(cellData).toISOString();
                                         break;
+                                    case eeCellTypes.Html:
+                                        cellData = eeHelper.htmlEncode(cellData);
+                                        break;
                                 }
 
                                 rows += `<Cell ss:StyleID="` + styleId + `">
@@ -635,7 +650,7 @@ export namespace excelExportJs {
                     </WorksheetOptions>`;
         }
 
-        public CreateExcel() {
+        public CreateExcel(isCompressed?: boolean, returnUrl?: boolean) {
             var result = '';
 
             result = `<?xml version="1.0"?>
@@ -652,10 +667,14 @@ export namespace excelExportJs {
                         `+ this._GetWorkSheets() + `
                     </Workbook>`;
 
-            result = eeHelper.RemoveSpaces(result);
+            if (isCompressed) {
+                result = eeHelper.RemoveSpaces(result);
+            }
 
-            var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=' + this._encoding });
-            result = window.URL.createObjectURL(blob);
+            if (returnUrl) {
+                var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=' + this._encoding });
+                result = window.URL.createObjectURL(blob);
+            }
 
             return result;
         }
