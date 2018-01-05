@@ -1,4 +1,6 @@
 export namespace excelExportJs {
+    'use strict';
+
     export enum eeCellTypes {
         Boolean,
         DateTime,
@@ -651,6 +653,10 @@ export namespace excelExportJs {
                     </Workbook>`;
 
             result = eeHelper.RemoveSpaces(result);
+
+            var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=' + this._encoding });
+            result = window.URL.createObjectURL(blob);
+
             return result;
         }
     }

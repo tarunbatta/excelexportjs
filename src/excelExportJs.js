@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var excelExportJs;
 (function (excelExportJs) {
+    'use strict';
     var eeCellTypes;
     (function (eeCellTypes) {
         eeCellTypes[eeCellTypes["Boolean"] = 0] = "Boolean";
@@ -450,6 +451,8 @@ var excelExportJs;
             var result = '';
             result = "<?xml version=\"1.0\"?>\n                    <?mso-application progid=\"Excel.Sheet\"?>\n                    <Workbook xmlns=\"urn:schemas-microsoft-com:office:spreadsheet\"\n                        xmlns:o=\"urn:schemas-microsoft-com:office:office\"\n                        xmlns:x=\"urn:schemas-microsoft-com:office:excel\"\n                        xmlns:ss=\"urn:schemas-microsoft-com:office:spreadsheet\"\n                        xmlns:html=\"http://www.w3.org/TR/REC-html40\">\n                        " + this._GetDocumentProperties() + "\n                        " + this._GetOfficeDocumentSettings() + "\n                        " + this._GetExcelWorkbook() + "\n                        " + this._GetStyles() + "\n                        " + this._GetWorkSheets() + "\n                    </Workbook>";
             result = eeHelper.RemoveSpaces(result);
+            var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=' + this._encoding });
+            result = window.URL.createObjectURL(blob);
             return result;
         };
         return excelExport;
