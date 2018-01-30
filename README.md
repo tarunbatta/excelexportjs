@@ -1,5 +1,9 @@
 # Client Side Excel Export using JavaScript
 
+## Introduction
+
+Various server-side binaries and support libraries are present to help us export grids / tables / data to excel sheets, but the same export handling at client side is a tough nut to crack. This plugin helps you achieve that, thereby providing advance features as well.
+
 ## Installation
 
 * npm i @tarunbatta/excelexportjs
@@ -57,3 +61,12 @@ a.href = obj.CreateExcel(true, true);
 a.download = 'download.xml';
 document.body.appendChild(a);
 ```
+
+## Supported Browsers
+
+* Chrome, supported in all versions
+* Firefox, supported in all versions
+* Microsoft Edge, supported in all versions
+* Safari, supported in all versions
+* Opera, supported since 7.2
+* Internet Explorer, not compatible.
