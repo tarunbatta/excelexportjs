@@ -12,6 +12,19 @@ Various server-side binaries and support libraries are present to help us export
 
 * npm install -g grunt-cli
 
+## Run on Dev Instance
+
+* change module from "commonjs" to "es2015" in tsconfig.json
+* live-server
+
+## Build Dist
+
+* grunt
+
+## Publish Library
+
+* npm publish
+
 ## Sample Usage
 
 Import the library as follows,
@@ -26,7 +39,7 @@ or
 import { excelExportJs } from './excelExportJs';
 ```
 
-The following is an example implementation where two tables are exported to an excel sheet,
+The following example is an implementation where two tables are exported to an excel sheet,
 
 ```js
 var cols = new Array<excelExportJs.eeColumn>();
@@ -62,6 +75,57 @@ a.download = 'download.xml';
 document.body.appendChild(a);
 ```
 
+The following example is an implementation where a HTML table exported to excel sheet, 
+
+```js
+var htmlTable = `<table id="tblExport" style="border: 1px solid black;">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Username</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style='background-color: red;'>1</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>`;
+
+var dataSet = excelExportJs.eeHelper.ConvertHtmlTable(htmlTable);
+var obj = new excelExportJs.excelExport(dataSet);
+
+var a = document.createElement("a");
+a.innerText = 'Click Me';
+a.href = obj.CreateExcel(true, true);
+a.download = 'download.xml';
+document.body.appendChild(a);
+```
+
+## Viewing contents of the excel sheet
+
+```js
+var p = document.createElement("p");
+p.innerText = obj.CreateExcel(false, false);
+document.body.appendChild(p);
+```
 ## Supported Browsers
 
 * Chrome, supported in all versions

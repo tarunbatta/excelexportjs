@@ -297,21 +297,6 @@ export namespace excelExportJs {
         }
     }
 
-    export class eeHelper {
-        static RemoveSpaces(html: string) {
-            let lines = html.split(/(?:\r\n|\n|\r)/);
-
-            // Rip out the leading whitespace.
-            return lines.map((line) => {
-                return line.replace(/^\s+/gm, '');
-            }).join(' ').trim();
-        }
-
-        static htmlEncode(html: string) {
-            return String(html).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-        }
-    }
-
     export class excelExport {
         private _dataType: string;
         private _fileExtension: string;
@@ -674,6 +659,63 @@ export namespace excelExportJs {
             if (returnUrl) {
                 var blob = new Blob([result], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=' + this._encoding });
                 result = window.URL.createObjectURL(blob);
+            }
+
+            return result;
+        }
+    }
+
+    export class eeHelper {
+        static RemoveSpaces(html: string) {
+            let lines = html.split(/(?:\r\n|\n|\r)/);
+
+            // Rip out the leading whitespace.
+            return lines.map((line) => {
+                return line.replace(/^\s+/gm, '');
+            }).join(' ').trim();
+        }
+
+        static htmlEncode(html: string) {
+            return String(html).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        /** converts html table to eeTable object */
+        static ConvertHtmlTable(html: string) {
+            let result = new Array<excelExportJs.eeTable>();
+
+            if (html != null && html.length > 0) {
+                let parser = new DOMParser();
+                let htmlDoc = parser.parseFromString(html, "text/xml");
+                let tableth = htmlDoc.getElementsByTagName('th');
+                let tabletd = htmlDoc.getElementsByTagName('tbody')[0].getElementsByTagName('td');
+
+                var cols = new Array<excelExportJs.eeColumn>();
+                for (let i = 0; i < tableth.length; i++) {
+                    let headerText = tableth[i].innerHTML;
+                    let field = headerText.replace(/\s/g, '').toLowerCase();
+                    cols.push(new excelExportJs.eeColumn(field, headerText, new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.String)));
+                }
+
+                var rows = new Array<excelExportJs.eeRow>();
+                var rowsData: excelExportJs.eeRow;
+                rowsData = { items: [] };
+
+                for (let i = 0; i < tabletd.length;) {
+                    var rowItem: any;
+                    rowItem = {};
+
+                    for (let j = 0; j < cols.length; j++) {
+                        rowItem[cols[j].name] = tabletd[i].innerHTML;
+                        i++;
+                    }
+
+                    rowsData.items.push(rowItem);
+                }
+
+                rows.push(rowsData);
+
+                var table = new excelExportJs.eeTable('Table', cols, rows);
+                result.push(table);
             }
 
             return result;

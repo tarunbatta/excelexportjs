@@ -243,21 +243,6 @@ var excelExportJs;
         return eeTable;
     }());
     excelExportJs.eeTable = eeTable;
-    var eeHelper = (function () {
-        function eeHelper() {
-        }
-        eeHelper.RemoveSpaces = function (html) {
-            var lines = html.split(/(?:\r\n|\n|\r)/);
-            return lines.map(function (line) {
-                return line.replace(/^\s+/gm, '');
-            }).join(' ').trim();
-        };
-        eeHelper.htmlEncode = function (html) {
-            return String(html).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-        };
-        return eeHelper;
-    }());
-    excelExportJs.eeHelper = eeHelper;
     var excelExport = (function () {
         function excelExport(dataSet, fileName, author, company, version, style) {
             this._dataType = 'json';
@@ -476,5 +461,51 @@ var excelExportJs;
         return excelExport;
     }());
     excelExportJs.excelExport = excelExport;
+    var eeHelper = (function () {
+        function eeHelper() {
+        }
+        eeHelper.RemoveSpaces = function (html) {
+            var lines = html.split(/(?:\r\n|\n|\r)/);
+            return lines.map(function (line) {
+                return line.replace(/^\s+/gm, '');
+            }).join(' ').trim();
+        };
+        eeHelper.htmlEncode = function (html) {
+            return String(html).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        };
+        eeHelper.ConvertHtmlTable = function (html) {
+            var result = new Array();
+            if (html != null && html.length > 0) {
+                var parser = new DOMParser();
+                var htmlDoc = parser.parseFromString(html, "text/xml");
+                var tableth = htmlDoc.getElementsByTagName('th');
+                var tabletd = htmlDoc.getElementsByTagName('tbody')[0].getElementsByTagName('td');
+                var cols = new Array();
+                for (var i = 0; i < tableth.length; i++) {
+                    var headerText = tableth[i].innerHTML;
+                    var field = headerText.replace(/\s/g, '').toLowerCase();
+                    cols.push(new excelExportJs.eeColumn(field, headerText, new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.String)));
+                }
+                var rows = new Array();
+                var rowsData;
+                rowsData = { items: [] };
+                for (var i = 0; i < tabletd.length;) {
+                    var rowItem;
+                    rowItem = {};
+                    for (var j = 0; j < cols.length; j++) {
+                        rowItem[cols[j].name] = tabletd[i].innerHTML;
+                        i++;
+                    }
+                    rowsData.items.push(rowItem);
+                }
+                rows.push(rowsData);
+                var table = new excelExportJs.eeTable('Table', cols, rows);
+                result.push(table);
+            }
+            return result;
+        };
+        return eeHelper;
+    }());
+    excelExportJs.eeHelper = eeHelper;
 })(excelExportJs = exports.excelExportJs || (exports.excelExportJs = {}));
 //# sourceMappingURL=excelExportJs.js.map

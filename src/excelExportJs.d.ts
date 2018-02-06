@@ -77,10 +77,6 @@ export declare namespace excelExportJs {
         defaultRowWidth: number | null;
         constructor(name: string, columns: Array<eeColumn>, rows: Array<eeRow>, headerStyle?: eeCellStyle, defaultColumnWidth?: number, defaultRowWidth?: number);
     }
-    class eeHelper {
-        static RemoveSpaces(html: string): string;
-        static htmlEncode(html: string): string;
-    }
     class excelExport {
         private _dataType;
         private _fileExtension;
@@ -105,5 +101,10 @@ export declare namespace excelExportJs {
         private _GetWorkSheets();
         private _GetWorksheetOptions();
         CreateExcel(isCompressed?: boolean, returnUrl?: boolean): string;
+    }
+    class eeHelper {
+        static RemoveSpaces(html: string): string;
+        static htmlEncode(html: string): string;
+        static ConvertHtmlTable(html: string): eeTable[];
     }
 }
