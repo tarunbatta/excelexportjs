@@ -6,7 +6,7 @@ Various server-side binaries and support libraries are present to help us export
 
 ## Installation
 
-* npm i @tarunbatta/excelexportjs
+* [npm i @tarunbatta/excelexportjs](https://www.npmjs.com/package/@tarunbatta/excelexportjs)
 
 ## Setup Dev Instance
 
@@ -21,8 +21,16 @@ Various server-side binaries and support libraries are present to help us export
 
 * grunt
 
+## Create Git Tag
+
+* git tag
+* git tag -a 4.0.x -m "version 4.0.x"
+* git push origin 4.0.x
+
 ## Publish Library
 
+* npm whoami
+* Manually update the version in package.json
 * npm publish
 
 ## Sample Usage
