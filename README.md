@@ -27,6 +27,10 @@ Various server-side binaries and support libraries are present to help us export
 * git tag -a 4.0.x -m "version 4.0.x"
 * git push origin 4.0.x
 
+## NPM Login
+
+* npm login
+
 ## Publish Library
 
 * npm publish
