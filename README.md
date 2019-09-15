@@ -12,6 +12,25 @@ Various server-side binaries and support libraries are present to help us export
 
 * npm install -g grunt-cli
 
+## Run on Dev Instance
+
+* change module from "commonjs" to "es2015" in tsconfig.json
+* live-server
+
+## Build Dist
+
+* grunt
+
+## Create Git Tag
+
+* git tag
+* git tag -a 4.0.x -m "version 4.0.x"
+* git push origin 4.0.x
+
+## Publish Library
+
+* npm publish
+
 ## Sample Usage
 
 Import the library as follows,

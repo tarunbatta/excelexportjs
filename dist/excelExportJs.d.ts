@@ -6,17 +6,17 @@ export declare namespace excelExportJs {
         Html = 3,
         Number = 4,
         Percent = 5,
-        String = 6,
+        String = 6
     }
     enum eeHorizontalCellAlignment {
         Center = "Center",
         Left = "Left",
-        Right = "Right",
+        Right = "Right"
     }
     enum eeVerticalCellAlignment {
         Bottom = "Bottom",
         Center = "Center",
-        Top = "Top",
+        Top = "Top"
     }
     class eeAlignment {
         hAlign: eeHorizontalCellAlignment;
@@ -92,18 +92,18 @@ export declare namespace excelExportJs {
         version: string;
         style: eeCellStyle;
         constructor(dataSet: Array<eeTable>, fileName?: string, author?: string, company?: string, version?: string, style?: eeCellStyle);
-        private _GetFileName();
-        private _GetDocumentProperties();
-        private _GetOfficeDocumentSettings();
-        private _GetExcelWorkbook();
-        private _GetBorders(style);
-        private _GetAlignment(style);
-        private _GetBackground(style);
-        private _GetFont(style);
-        private _GetNumberFormat(column);
-        private _GetStyles();
-        private _GetWorkSheets();
-        private _GetWorksheetOptions();
+        private _GetFileName;
+        private _GetDocumentProperties;
+        private _GetOfficeDocumentSettings;
+        private _GetExcelWorkbook;
+        private _GetBorders;
+        private _GetAlignment;
+        private _GetBackground;
+        private _GetFont;
+        private _GetNumberFormat;
+        private _GetStyles;
+        private _GetWorkSheets;
+        private _GetWorksheetOptions;
         CreateExcel(isCompressed?: boolean, returnUrl?: boolean): string;
     }
 }
