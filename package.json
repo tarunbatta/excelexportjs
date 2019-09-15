@@ -21,16 +21,16 @@
     "author": "Tarun Batta",
     "license": "MIT",
     "engines": {
-        "node": ">=8.8.1",
-        "npm": ">=5.5.1"
+        "node": ">=10.16.3",
+        "npm": ">=6.11.3"
     },
     "dependencies": {},
     "devDependencies": {
-        "grunt": "^1.0.1",
+        "grunt": "^1.0.4",
         "grunt-contrib-copy": "^1.0.0",
-        "grunt-contrib-uglify": "^3.3.0",
-        "live-server": "^1.2.0",
-        "typescript": "^2.6.2"
+        "grunt-contrib-uglify": "^3.4.0",
+        "live-server": "^1.2.1",
+        "typescript": "^2.9.2"
     },
     "bugs": {
         "url": "https://github.com/tarunbatta/excelexportjs/issues"
