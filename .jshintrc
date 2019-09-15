@@ -3,6 +3,6 @@
     "globals": {
         "describe": false,
         "it": false,
-        "require": false        
+        "require": false
     }
 }
