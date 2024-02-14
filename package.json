@@ -24,12 +24,11 @@
         "node": ">=10.16.3",
         "npm": ">=6.11.3"
     },
-    "dependencies": {},
     "devDependencies": {
         "grunt": "^1.0.4",
         "grunt-contrib-copy": "^1.0.0",
         "grunt-contrib-uglify": "^3.4.0",
-        "live-server": "^1.2.1",
+        "live-server": "^1.1.0",
         "typescript": "^2.9.2"
     },
     "bugs": {
