@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.excelExportJs = void 0;
 var excelExportJs;
 (function (excelExportJs) {
     'use strict';
@@ -476,5 +477,5 @@ var excelExportJs;
         return excelExport;
     }());
     excelExportJs.excelExport = excelExport;
-})(excelExportJs = exports.excelExportJs || (exports.excelExportJs = {}));
+})(excelExportJs || (exports.excelExportJs = excelExportJs = {}));
 //# sourceMappingURL=excelExportJs.js.map

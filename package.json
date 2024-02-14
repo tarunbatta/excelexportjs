@@ -25,11 +25,11 @@
         "npm": ">=6.11.3"
     },
     "devDependencies": {
-        "grunt": "^1.0.4",
+        "grunt": "^1.6.1",
         "grunt-contrib-copy": "^1.0.0",
-        "grunt-contrib-uglify": "^3.4.0",
+        "grunt-contrib-uglify": "^5.2.2",
         "live-server": "^1.1.0",
-        "typescript": "^2.9.2"
+        "typescript": "^5.3.3"
     },
     "bugs": {
         "url": "https://github.com/tarunbatta/excelexportjs/issues"
