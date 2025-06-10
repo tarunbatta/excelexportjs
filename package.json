@@ -1,6 +1,6 @@
 {
     "name": "@tarunbatta/excelexportjs",
-    "version": "5.0.0",
+    "version": "5.0.2",
     "description": "Client Side Excel Export using TypeScript",
     "type": "module",
     "main": "dist/index.js",
