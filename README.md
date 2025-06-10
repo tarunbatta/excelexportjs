@@ -1,95 +1,213 @@
-# Client Side Excel Export using JavaScript
+# ExcelExportJS
 
-## Introduction
+A lightweight JavaScript library for exporting data to Excel files directly in the browser. No server-side processing required.
 
-Various server-side binaries and support libraries are present to help us export grids / tables / data to excel sheets, but the same export handling at client side is a tough nut to crack. This plugin helps you achieve that, thereby providing advance features as well.
+## Features
+
+- 🚀 Browser-based Excel file generation
+- 📊 Support for multiple worksheets
+- 🎨 Customizable cell styles (fonts, colors, alignment)
+- 📝 Multiple data types (text, numbers, dates)
+- 🔄 Automatic column width adjustment
+- 🎯 TypeScript support
 
 ## Installation
 
-* npm i @tarunbatta/excelexportjs
-
-## Setup Dev Instance
-
-* npm install -g grunt-cli
-
-## Run on Dev Instance
-
-* change module from "commonjs" to "es2015" in tsconfig.json
-* live-server
-
-## Build Dist
-
-* grunt
-
-## Create Git Tag
-
-* git tag
-* git tag -a 4.0.x -m "version 4.0.x"
-* git push origin 4.0.x
-
-## NPM Login
-
-* npm login
-
-## Publish Library
-
-* npm publish
-
-## Sample Usage
-
-Import the library as follows,
-
-```js
-var excelExportJs = require("./excelExportJs");
+```bash
+npm install excelexportjs
 ```
 
-or
+## Quick Start
 
-```js
-import { excelExportJs } from './excelExportJs';
+```typescript
+import { ExcelExport, Table, CellType, HorizontalAlignment, VerticalAlignment } from 'excelexportjs';
+
+// Create a table definition
+const table: Table = {
+    name: 'Sales Report',
+    columns: [
+        {
+            headerText: 'Product',
+            name: 'product',
+            type: { cellType: CellType.String, format: '@' },
+            width: 150,
+            isVisible: true,
+            style: {
+                fontFamily: 'Arial',
+                fontSize: 12,
+                fontColor: '#000000',
+                isBold: true,
+                isItalic: false,
+                isUnderline: false,
+                backgroundColor: '#FFFFFF',
+                horizontalAlignment: HorizontalAlignment.Left,
+                verticalAlignment: VerticalAlignment.Center,
+                isWrapped: false,
+                isMerged: false,
+                rowSpan: 1,
+                columnSpan: 1
+            }
+        },
+        {
+            headerText: 'Sales',
+            name: 'sales',
+            type: { cellType: CellType.Number, format: '$#,##0.00' },
+            width: 100,
+            isVisible: true,
+            style: {
+                fontFamily: 'Arial',
+                fontSize: 12,
+                fontColor: '#000000',
+                isBold: false,
+                isItalic: false,
+                isUnderline: false,
+                backgroundColor: '#FFFFFF',
+                horizontalAlignment: HorizontalAlignment.Right,
+                verticalAlignment: VerticalAlignment.Center,
+                isWrapped: false,
+                isMerged: false,
+                rowSpan: 1,
+                columnSpan: 1
+            }
+        }
+    ],
+    rows: [
+        { items: ['Product A', 1500.50] },
+        { items: ['Product B', 2750.75] }
+    ],
+    headerStyle: {
+        fontFamily: 'Arial',
+        fontSize: 12,
+        fontColor: '#000000',
+        isBold: true,
+        isItalic: false,
+        isUnderline: false,
+        backgroundColor: '#FFFFFF',
+        horizontalAlignment: HorizontalAlignment.Center,
+        verticalAlignment: VerticalAlignment.Center,
+        isWrapped: false,
+        isMerged: false,
+        rowSpan: 1,
+        columnSpan: 1
+    },
+    defaultColumnWidth: null,
+    defaultRowWidth: null
+};
+
+// Create and export Excel file
+const excelExport = new ExcelExport([table], 'SalesReport');
+excelExport.createExcel();
 ```
 
-The following is an example implementation where two tables are exported to an excel sheet,
+## API Reference
 
-```js
-var cols = new Array<excelExportJs.eeColumn>();
-cols.push(new excelExportJs.eeColumn('sNo', 'S.No.', new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.Number), 25));
-cols.push(new excelExportJs.eeColumn('name', 'Name', new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.Html), 100));
-cols.push(new excelExportJs.eeColumn('age', 'Age', new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.Number), 25));
-cols.push(new excelExportJs.eeColumn('dob', 'Date Of Birth', new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.DateTime), 75));
-cols.push(new excelExportJs.eeColumn('salary', 'Salary $', new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.Float)));
-cols.push(new excelExportJs.eeColumn('isActive', 'Is Active', new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.Boolean)));
-cols.push(new excelExportJs.eeColumn('marks', 'Marks %', new excelExportJs.eeColumnType(excelExportJs.eeCellTypes.Percent)));
+### ExcelExport
 
-var rows = new Array<excelExportJs.eeRow>();
-var row = new excelExportJs.eeRow([
-    { sNo: 1, name: '<a>Tarun</a>', age: 34, dob: '1-Nov-1983', salary: 1.11, isActive: true, marks: 0.1211 },
-    { sNo: 2, name: 'Jax', age: 32, dob: { data: '5-Jan-1985', style: new excelExportJs.eeCellStyle(new excelExportJs.eeBackground('#34FFFF')) }, salary: 2.33, isActive: false, marks: 0.5422 },
-    { sNo: 3, name: 'Max', age: 1, dob: { data: '15-Jun-2017', style: new excelExportJs.eeCellStyle(new excelExportJs.eeBackground('#FF0000')) }, salary: 3.44, isActive: true, marks: 0.8133 }
-]);
-rows.push(row);
+Main class for creating Excel exports.
 
-var table = new excelExportJs.eeTable('Table 1', cols, rows);
-var table2 = new excelExportJs.eeTable('Table 2', cols, rows);
-
-var dataSet = new Array<excelExportJs.eeTable>();
-dataSet.push(table);
-dataSet.push(table2);
-
-var obj = new excelExportJs.excelExport(dataSet);
-
-var a = document.createElement("a");
-a.innerText = 'Click Me';
-a.href = obj.CreateExcel(true, true);
-a.download = 'download.xml';
-document.body.appendChild(a);
+```typescript
+new ExcelExport(
+    dataSet: Table[],
+    fileName?: string,
+    author?: string,
+    company?: string,
+    version?: string,
+    style?: CellStyle
+)
 ```
 
-## Supported Browsers
+#### Parameters:
+- `dataSet`: Array of tables to export
+- `fileName`: Name of the Excel file (default: 'ExcelExport')
+- `author`: Author name (default: 'ExcelExportJS')
+- `company`: Company name (default: 'ExcelExportJS')
+- `version`: Version number (default: '1.0.0')
+- `style`: Default cell style (default: new DefaultCellStyle())
 
-* Chrome, supported in all versions
-* Firefox, supported in all versions
-* Microsoft Edge, supported in all versions
-* Safari, supported in all versions
-* Opera, supported since 7.2
-* Internet Explorer, not compatible.
+#### Methods:
+- `createExcel(returnUrl: boolean = false): string | Blob`
+  - Creates and downloads the Excel file
+  - If `returnUrl` is true, returns a blob URL instead of downloading
+
+### Table
+
+Represents a worksheet in the Excel file.
+
+```typescript
+interface Table {
+    name: string;
+    columns: Column[];
+    rows: Row[];
+    headerStyle: CellStyle;
+    defaultColumnWidth: number | null;
+    defaultRowWidth: number | null;
+}
+```
+
+### Column
+
+Defines a column in the Excel file.
+
+```typescript
+interface Column {
+    headerText: string;
+    name: string;
+    type: ColumnType;
+    width: number;
+    isVisible: boolean;
+    style: CellStyle;
+}
+```
+
+### CellStyle
+
+Defines the style properties for cells.
+
+```typescript
+interface CellStyle {
+    fontFamily: string;
+    fontSize: number;
+    fontColor: string;
+    isBold: boolean;
+    isItalic: boolean;
+    isUnderline: boolean;
+    backgroundColor: string;
+    horizontalAlignment: HorizontalAlignment;
+    verticalAlignment: VerticalAlignment;
+    isWrapped: boolean;
+    isMerged: boolean;
+    rowSpan: number;
+    columnSpan: number;
+}
+```
+
+## Supported Cell Types
+
+- `CellType.String`: Text data
+- `CellType.Number`: Numeric data
+- `CellType.Date`: Date/time data
+- `CellType.Boolean`: Boolean values
+
+## Alignment Options
+
+### HorizontalAlignment
+- `Left`
+- `Center`
+- `Right`
+
+### VerticalAlignment
+- `Top`
+- `Center`
+- `Bottom`
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+MIT © [Tarun Batta](https://www.linkedin.com/in/tarunbatta/)
+
+## Support
+
+If you find this package helpful, please consider giving it a ⭐️ on GitHub!

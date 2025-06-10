@@ -1,44 +1,25 @@
 {
     "env": {
         "browser": true,
-        "commonjs": false,
-        "es6": true,
-        "node": true
+        "es2021": true,
+        "node": true,
+        "jest": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
+        "ecmaVersion": "latest",
         "sourceType": "module"
     },
+    "plugins": ["@typescript-eslint"],
     "rules": {
-        "no-alert": "warn",
-        "no-console": "error",
-        "no-dupe-args": "error",
-        "no-eq-null": "off",
-        "no-fallthrough": "error",
-        "no-floating-decimal": "off",
-        "no-global-assign": "error",
-        "no-multi-str": "off",
-        "no-redeclare": "error",
-        "no-sequences": "off",
-        "no-unused-vars": "off",
-        "no-useless-escape": "off",
-        "linebreak-style": [
-            "error",
-            "windows"
-        ],
-        "quotes": [
-            "warn",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ]
-    },
-    "globals": {
-        "$": true
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+        "no-console": "warn"
     }
 }
