@@ -17,4 +17,6 @@ export enum CellType {
     Percent = 'Percent',
     /** Plain text content */
     String = 'String',
+    /** Large numbers that should be treated as text to prevent scientific notation */
+    LargeNumber = 'LargeNumber',
 }

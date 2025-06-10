@@ -10,6 +10,10 @@ A lightweight JavaScript library for exporting data to Excel files directly in t
 - 📝 Multiple data types (text, numbers, dates)
 - 🔄 Automatic column width adjustment
 - 🎯 TypeScript support
+- 📝 Dynamic file naming support
+- 🔢 Support for large numbers without scientific notation
+- 👁️ Column visibility control
+- 📋 Default non-bold text styling
 
 ## Installation
 
@@ -27,16 +31,17 @@ const table: Table = {
     name: 'Sales Report',
     columns: [
         {
-            headerText: 'Product',
-            name: 'product',
-            type: { cellType: CellType.String, format: '@' },
+            headerText: 'Account Number',
+            name: 'accountNumber',
+            // Use LargeNumber type to prevent scientific notation for large numbers
+            type: { cellType: CellType.LargeNumber, format: '@' },
             width: 150,
             isVisible: true,
             style: {
                 fontFamily: 'Arial',
                 fontSize: 12,
                 fontColor: '#000000',
-                isBold: true,
+                isBold: false,  // Text is not bold by default
                 isItalic: false,
                 isUnderline: false,
                 backgroundColor: '#FFFFFF',
@@ -69,17 +74,25 @@ const table: Table = {
                 rowSpan: 1,
                 columnSpan: 1
             }
+        },
+        {
+            headerText: 'Hidden Column',
+            name: 'hidden',
+            type: { cellType: CellType.String, format: '@' },
+            width: 100,
+            isVisible: false,  // This column will be hidden in Excel
+            style: new DefaultCellStyle()
         }
     ],
     rows: [
-        { items: ['Product A', 1500.50] },
-        { items: ['Product B', 2750.75] }
+        { items: ['010400592144000101', 1500.50, 'hidden data'] },
+        { items: ['010400592144000102', 2750.75, 'hidden data'] }
     ],
     headerStyle: {
         fontFamily: 'Arial',
         fontSize: 12,
         fontColor: '#000000',
-        isBold: true,
+        isBold: true,  // Only headers are bold by default
         isItalic: false,
         isUnderline: false,
         backgroundColor: '#FFFFFF',
@@ -94,8 +107,9 @@ const table: Table = {
     defaultRowWidth: null
 };
 
-// Create and export Excel file
-const excelExport = new ExcelExport([table], 'SalesReport');
+// Create and export Excel file with dynamic name
+const date = new Date().toISOString().split('T')[0];
+const excelExport = new ExcelExport([table], `SalesReport_${date}`);
 excelExport.createExcel();
 ```
 
@@ -108,7 +122,7 @@ Main class for creating Excel exports.
 ```typescript
 new ExcelExport(
     dataSet: Table[],
-    fileName?: string,
+    fileName?: string,  // Custom name for the Excel file (default: 'ExcelExport')
     author?: string,
     company?: string,
     version?: string,
@@ -154,7 +168,7 @@ interface Column {
     name: string;
     type: ColumnType;
     width: number;
-    isVisible: boolean;
+    isVisible: boolean;  // Controls column visibility in Excel
     style: CellStyle;
 }
 ```
@@ -168,7 +182,7 @@ interface CellStyle {
     fontFamily: string;
     fontSize: number;
     fontColor: string;
-    isBold: boolean;
+    isBold: boolean;  // Controls text boldness
     isItalic: boolean;
     isUnderline: boolean;
     backgroundColor: string;
@@ -187,6 +201,36 @@ interface CellStyle {
 - `CellType.Number`: Numeric data
 - `CellType.Date`: Date/time data
 - `CellType.Boolean`: Boolean values
+- `CellType.LargeNumber`: Large numbers that should be treated as text to prevent scientific notation (e.g., account numbers, IDs)
+- `CellType.Float`: Floating-point numbers
+- `CellType.Percent`: Percentage values
+- `CellType.Html`: HTML content
+
+## Best Practices
+
+1. **Large Numbers**: Use `CellType.LargeNumber` for any numeric values that should not be displayed in scientific notation (e.g., account numbers, IDs, etc.)
+   ```typescript
+   type: { cellType: CellType.LargeNumber, format: '@' }
+   ```
+
+2. **Hidden Columns**: Set `isVisible: false` for any columns that should not appear in the Excel file
+   ```typescript
+   isVisible: false
+   ```
+
+3. **Text Styling**: By default, text is not bold. Only headers are bold by default. Override `isBold` in the style if needed
+   ```typescript
+   style: {
+       ...new DefaultCellStyle(),
+       isBold: false  // Explicitly set to false for non-bold text
+   }
+   ```
+
+4. **Dynamic File Names**: Use the `fileName` parameter to create dynamic file names
+   ```typescript
+   const date = new Date().toISOString().split('T')[0];
+   new ExcelExport([table], `Report_${date}`);
+   ```
 
 ## Alignment Options
 
