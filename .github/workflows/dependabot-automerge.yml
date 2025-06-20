@@ -1,0 +1,181 @@
+name: Dependabot Auto Merge
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  pull_request_review:
+    types: [submitted]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "PR number to auto-merge (optional, will process all Dependabot PRs if not specified)"
+        required: false
+        type: string
+
+jobs:
+  dependabot-automerge:
+    # Only run on Dependabot PRs or manual trigger
+    if: github.actor == 'dependabot[bot]' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+
+      - name: Make script executable
+        run: chmod +x .github/scripts/process_pr.sh
+
+      - name: Debug - Show workflow context
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "=== Workflow Debug Info ==="
+          echo "Event: ${{ github.event_name }}"
+          echo "Actor: ${{ github.actor }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "PR Number Input: ${{ github.event.inputs.pr_number }}"
+          echo "=========================="
+
+      - name: Process existing Dependabot PRs (manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          echo "Manual trigger detected. Processing existing Dependabot PRs..."
+
+          # Test GitHub CLI access
+          echo "Testing GitHub CLI access..."
+          gh auth status || echo "GitHub CLI auth failed"
+
+          # List all open PRs to debug
+          echo "=== All Open PRs ==="
+          gh pr list --state open --limit 5 --json number,title,author,mergeStateStatus,isDraft
+          echo "===================="
+
+          # If specific PR number provided, process only that one
+          if [ -n "${{ github.event.inputs.pr_number }}" ]; then
+            echo "Processing specific PR #${{ github.event.inputs.pr_number }}"
+            
+            # Get PR details
+            PR_INFO=$(gh pr view "${{ github.event.inputs.pr_number }}" --json author,title,mergeStateStatus,isDraft,number,state,mergeable)
+            echo "PR Info: $PR_INFO"
+            
+            AUTHOR=$(echo "$PR_INFO" | jq -r '.author.login')
+            echo "Author: $AUTHOR"
+            
+            if [ "$AUTHOR" = "dependabot[bot]" ] || [ "$AUTHOR" = "app/dependabot" ]; then
+              echo "PR #${{ github.event.inputs.pr_number }} is from Dependabot, processing..."
+              .github/scripts/process_pr.sh "${{ github.event.inputs.pr_number }}"
+            else
+              echo "PR #${{ github.event.inputs.pr_number }} is not from Dependabot (author: $AUTHOR), skipping"
+            fi
+          else
+            echo "No specific PR provided, processing all open Dependabot PRs..."
+            
+            # Get all open Dependabot PRs with more detailed info
+            echo "=== Fetching Dependabot PRs ==="
+            DEPENDABOT_PRS=$(gh pr list --author "app/dependabot" --state open --json number,title,mergeStateStatus,isDraft,state,mergeable)
+            echo "Dependabot PRs: $DEPENDABOT_PRS"
+            
+            # Count PRs
+            PR_COUNT=$(echo "$DEPENDABOT_PRS" | jq length)
+            echo "Found $PR_COUNT Dependabot PRs"
+            
+            if [ "$PR_COUNT" -eq 0 ]; then
+              echo "No Dependabot PRs found"
+              exit 0
+            fi
+            
+            # Process each PR
+            echo "$DEPENDABOT_PRS" | jq -r '.[] | "\(.number)|\(.title)|\(.mergeStateStatus)|\(.isDraft)|\(.state)|\(.mergeable)"' | while IFS='|' read -r pr_number title merge_state_status is_draft state mergeable; do
+              echo "=== Processing PR #$pr_number ==="
+              echo "Title: $title"
+              echo "State: $state"
+              echo "Mergeable: $mergeable"
+              echo "Merge State Status: $merge_state_status"
+              echo "Is Draft: $is_draft"
+              
+              # Skip if not mergeable
+              if [ "$mergeable" = "false" ]; then
+                echo "PR #$pr_number is not mergeable, skipping"
+                continue
+              fi
+              
+              # Skip if in draft
+              if [ "$is_draft" = "true" ]; then
+                echo "PR #$pr_number is in draft state, skipping"
+                continue
+              fi
+              
+              echo "Processing PR #$pr_number: $title"
+              .github/scripts/process_pr.sh "$pr_number" "$merge_state_status" "$is_draft"
+              
+              # Add delay between PRs to avoid rate limiting
+              sleep 5
+            done
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for Dependabot PRs
+        if: github.actor == 'dependabot[bot]'
+        run: |
+          echo "Processing Dependabot PR #${{ github.event.pull_request.number }}"
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR State: ${{ github.event.pull_request.state }}"
+          echo "Mergeable State: ${{ github.event.pull_request.mergeStateStatus }}"
+          echo "Is Draft: ${{ github.event.pull_request.isDraft }}"
+
+          # Skip if PR is in draft state
+          if [ "${{ github.event.pull_request.isDraft }}" = "true" ]; then
+            echo "PR is in draft state, skipping auto-merge"
+            exit 0
+          fi
+
+          # Wait a bit for checks to complete
+          sleep 30
+
+          # Check if PR is ready for merge
+          if [ "${{ github.event.pull_request.mergeStateStatus }}" = "clean" ]; then
+            echo "PR is ready for merge, enabling auto-merge..."
+            
+            # Try to enable auto-merge with squash strategy
+            gh pr merge --auto --squash "${{ github.event.pull_request.number }}" || {
+              echo "Squash merge failed, trying merge commit..."
+              gh pr merge --auto --merge "${{ github.event.pull_request.number }}" || {
+                echo "Merge commit failed, trying rebase..."
+                gh pr merge --auto --rebase "${{ github.event.pull_request.number }}" || {
+                  echo "All merge strategies failed"
+                  exit 1
+                }
+              }
+            }
+            
+            echo "Auto-merge enabled for PR #${{ github.event.pull_request.number }}"
+          else
+            echo "PR is not ready for merge. Status: ${{ github.event.pull_request.mergeStateStatus }}"
+            echo "Waiting for checks to complete..."
+            
+            # If it's a review event and approved, try to merge anyway
+            if [ "${{ github.event_name }}" = "pull_request_review" ] && [ "${{ github.event.review.state }}" = "approved" ]; then
+              echo "Review approved, attempting to merge..."
+              gh pr merge --auto --squash "${{ github.event.pull_request.number }}" || {
+                echo "Auto-merge failed even with approval"
+              }
+            fi
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on PR
+        if: always() && github.actor == 'dependabot[bot]'
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            gh pr comment "${{ github.event.pull_request.number }}" --body "🤖 Auto-merge enabled! This PR will be automatically merged once all checks pass."
+          else
+            gh pr comment "${{ github.event.pull_request.number }}" --body "🤖 Auto-merge failed. Please review manually."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

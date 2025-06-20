@@ -1,49 +1,77 @@
 version: 2
 updates:
-  # Enable version updates for npm
-  - package-ecosystem: 'npm'
-    directory: '/'
-    schedule:
-      interval: 'weekly'
-      day: 'monday'
-      time: '09:00'
-    open-pull-requests-limit: 10
-    reviewers:
-      - 'tarunbatta'
-    assignees:
-      - 'tarunbatta'
-    commit-message:
-      prefix: 'deps'
-      include: 'scope'
-    labels:
-      - 'dependencies'
-      - 'automated'
-    ignore:
-      # Ignore major version updates for React to avoid breaking changes
-      - dependency-name: 'react'
-        update-types: ['version-update:semver-major']
-      - dependency-name: 'react-dom'
-        update-types: ['version-update:semver-major']
-      - dependency-name: '@types/react'
-        update-types: ['version-update:semver-major']
-      - dependency-name: '@types/react-dom'
-        update-types: ['version-update:semver-major']
+    # Enable version updates for npm
+    - package-ecosystem: 'npm'
+      directory: '/'
+      schedule:
+          interval: 'weekly'
+          day: 'monday'
+          time: '09:00'
+      open-pull-requests-limit: 10
+      reviewers:
+          - 'tarunbatta'
+      assignees:
+          - 'tarunbatta'
+      commit-message:
+          prefix: 'deps'
+          include: 'scope'
+      labels:
+          - 'dependencies'
+          - 'automated'
+      ignore:
+          # Ignore major version updates for React to avoid breaking changes
+          - dependency-name: 'react'
+            update-types: ['version-update:semver-major']
+          - dependency-name: 'react-dom'
+            update-types: ['version-update:semver-major']
+          - dependency-name: '@types/react'
+            update-types: ['version-update:semver-major']
+          - dependency-name: '@types/react-dom'
+            update-types: ['version-update:semver-major']
 
-  # Enable version updates for GitHub Actions
-  - package-ecosystem: 'github-actions'
-    directory: '/'
-    schedule:
-      interval: 'weekly'
-      day: 'monday'
-      time: '09:00'
-    open-pull-requests-limit: 5
-    reviewers:
-      - 'tarunbatta'
-    assignees:
-      - 'tarunbatta'
-    commit-message:
-      prefix: 'ci'
-      include: 'scope'
-    labels:
-      - 'github-actions'
-      - 'automated'
+    # Enable version updates for GitHub Actions
+    - package-ecosystem: 'github-actions'
+      directory: '/'
+      schedule:
+          interval: 'weekly'
+          day: 'monday'
+          time: '09:00'
+      open-pull-requests-limit: 5
+      reviewers:
+          - 'tarunbatta'
+      assignees:
+          - 'tarunbatta'
+      commit-message:
+          prefix: 'ci'
+          include: 'scope'
+      labels:
+          - 'github-actions'
+          - 'automated'
+
+    # Enable security updates for npm
+    - package-ecosystem: 'npm'
+      directory: '/'
+      schedule:
+          interval: 'daily'
+      open-pull-requests-limit: 5
+      reviewers:
+          - 'tarunbatta'
+      assignees:
+          - 'tarunbatta'
+      commit-message:
+          prefix: 'security'
+          include: 'scope'
+      labels:
+          - 'security'
+          - 'dependencies'
+          - 'automated'
+      ignore:
+          # Ignore major version updates for React to avoid breaking changes
+          - dependency-name: 'react'
+            update-types: ['version-update:semver-major']
+          - dependency-name: 'react-dom'
+            update-types: ['version-update:semver-major']
+          - dependency-name: '@types/react'
+            update-types: ['version-update:semver-major']
+          - dependency-name: '@types/react-dom'
+            update-types: ['version-update:semver-major']
